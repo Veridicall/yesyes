@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Lyla 💖</title>
+
+<!-- 💖 Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  text-align: center;
+}
+
+/* 🌌 galaxy canvas */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+/* 💖 title */
+.glow {
+  font-family: 'Great Vibes', cursive;
+  font-size: 4em;
+  margin-top: 20vh;
+  background: linear-gradient(45deg, #ff9bd2, #ffd6ec, #ff4da6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 🌈 buttons */
+button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(45deg, #ff4da6, #ff9bd2, #ffd6ec);
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(255, 77, 166, 0.6);
+}
+
+/* typing */
+.typing {
+  margin-top: 20vh;
+  font-size: 1.6em;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  background: linear-gradient(45deg, #ffffff, #ffb6e6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* gift */
+.gift {
+  font-size: 5em;
+  margin-top: 20vh;
+  cursor: pointer;
+  animation: float 2s infinite ease-in-out;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+/* final message */
+.final-message {
+  margin-top: 20vh;
+  font-size: 1.8em;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.8;
+  font-family: 'Great Vibes', cursive;
+  background: linear-gradient(45deg, #ff9bd2, #ffffff, #ff4da6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="galaxy"></canvas>
+
+<!-- 🎵 MUSIC (stays forever now) -->
+<audio id="bg-music" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div id="app">
+  <div class="glow">yes</div>
+  <button onclick="start()">💖</button>
+</div>
+
+<script>
+
+/* 🌌 galaxy */
+const canvas = document.getElementById("galaxy");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+for (let i = 0; i < 200; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 2,
+    speed: Math.random() * 0.5
+  });
+}
+
+function animateGalaxy() {
+  ctx.fillStyle = "#0b0c2a";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "white";
+  stars.forEach(s => {
+    s.y += s.speed;
+    if (s.y > canvas.height) s.y = 0;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  requestAnimationFrame(animateGalaxy);
+}
+animateGalaxy();
+
+/* 🎬 start */
+function start() {
+  let music = document.getElementById("bg-music");
+
+  let playPromise = music.play();
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      music.volume = 0;
+
+      let fade = setInterval(() => {
+        if (music.volume < 0.4) music.volume += 0.02;
+        else clearInterval(fade);
+      }, 200);
+    });
+  }
+
+  document.getElementById("app").innerHTML = `
+    <div class="typing" id="typing"></div>
+    <br>
+    <button onclick="next()">yesyes</button>
+  `;
+
+  typeText("HAII BABYY I HOPE YOU'RE DOING GOOODDD", "typing");
+}
+
+/* typing */
+function typeText(text, id) {
+  let i = 0;
+  function typing() {
+    if (i < text.length) {
+      document.getElementById(id).innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, 40);
+    }
+  }
+  typing();
+}
+
+/* next */
+function next() {
+  document.getElementById("app").innerHTML = `
+    <div class="typing" id="chat"></div>
+    <br>
+    <button onclick="gift()">🎁</button>
+  `;
+
+  let msg = "HAPPPY BIRTHDAYY LYLAAA YOU'RE 21 NOW GOOD JOBB. YOU'VE COME SO FAR IN LIFE BABY AND YOU'VE ENDURED SO MANY HARDSHIPS. YOU'VE DONE SOO MUCHH AND ACHIEVED A LOT IN MY EYES MY SWEET GIRL. I KNOW THINGS HAVE BEEN HARD BUT I JUST WANT YOU TO REMEMBER THAT I AM PROUD OF YOU NO MATTER WHAT OKAY. I LOVE YOU";
+
+  typeText(msg, "chat");
+}
+
+/* gift */
+function gift() {
+  document.getElementById("app").innerHTML = `
+    <div class="gift" onclick="final()">🎁</div>
+    <p>open it 💖</p>
+  `;
+}
+
+/* 💌 FINAL (no more body wipe = music keeps playing) */
+function final() {
+  document.getElementById("app").innerHTML = `
+    <div class="final-message">
+      lyla you are the most beautiful part about my life and you're my safe place and you hold so much meaningg to meeee i don't just love you but choose you evey single day okay
+      <br><br>
+      Happy Birthday 💖
+      <br><br>
+      - Shams
+    </div>
+  `;
+}
+
+</script>
+
+</body>
+</html
